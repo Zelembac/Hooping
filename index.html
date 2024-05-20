@@ -141,6 +141,8 @@
             board = meshes[3];
             ground = meshes[4];
 
+            meshes[2].scaling = new BABYLON.Vector3(1.2, 1.2, 1.2);
+
             basketball.position.z = 0;
             basketball.position.y = 100;
             basketball.position.x = 2.4;
@@ -402,8 +404,8 @@
             console.log(top - bottom);
             sphereAggregate.body.applyImpulse(
               new BABYLON.Vector3(
-                -2.4 + (top - bottom) / 1000,
-                4.98 - (top - bottom) / 1000,
+                -2.6 + (top - bottom) / 1000,
+                5.18 - (top - bottom) / 1000,
                 (up - down) / 100
               ),
               scene.getMeshByName("ball-" + (ballCounter - 1)).absolutePosition
