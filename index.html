@@ -50,10 +50,11 @@
         left: 45vw;
         width: 10vw;
         height: 5vh;
-        font-size: 2em;
+        font-size: 3em;
         display: flex;
         align-items: center;
         justify-content: center;
+        color: aliceblue;
       }
     </style>
   </head>
@@ -89,7 +90,7 @@
         // This creates and positions a free camera(non - mesh)
         var camera = new BABYLON.FreeCamera(
           "camera1",
-          new BABYLON.Vector3(5, 0, 0),
+          new BABYLON.Vector3(6, 0, 0),
           scene
         );
         camera.fov = 1;
@@ -103,29 +104,51 @@
         // );
 
         // This targets the camera to scene origin
-        camera.setTarget(BABYLON.Vector3.Zero());
+        camera.setTarget(new BABYLON.Vector3(0, 0, 0));
 
         // This attaches the camera to the canvas
         // camera.attachControl(canvas, true);
 
         // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
-        var light = new BABYLON.HemisphericLight(
+        var light1 = new BABYLON.HemisphericLight(
           "light",
           new BABYLON.Vector3(0, 1, 0),
           scene
         );
 
         // Default intensity is 1. Let's dim the light a small amount
-        light.intensity = 2.7;
+        light1.intensity = 0.5;
+
+        var light = new BABYLON.DirectionalLight(
+          "light",
+          new BABYLON.Vector3(-1, -1, -1),
+          scene
+        );
+        light.position = new BABYLON.Vector3(5, 5, 5);
+        //var light = new BABYLON.PointLight("light", new BABYLON.Vector3(0, 0, 0), scene);
+        //var light = new BABYLON.SpotLight("light", new BABYLON.Vector3(0, 0, 0), new BABYLON.Vector3(-1, -1, -1), Math.PI/4, 50, scene);
+
+        light.intensity = 2;
+
+        // var box55 = BABYLON.MeshBuilder.CreateBox(
+        //   "box",
+        //   {
+        //     size: 1,
+        //   },
+        //   scene
+        // );
+        // box55.position = new BABYLON.Vector3(5, 5, 0);
 
         let basketball;
         let hoop;
         let board;
         let ground;
+        let net;
+        let barrier;
 
-        let onGround = false;
+        let trown = false;
 
-        let inAir = false;
+        let trownOne = 0;
 
         let score = 0;
 
@@ -136,12 +159,20 @@
           scene,
           (meshes, particleSystem, skeleton, animationGroups) => {
             meshes[0].scaling = new BABYLON.Vector3(-1, 1, 1);
-            basketball = meshes[1];
-            hoop = meshes[2];
-            board = meshes[3];
-            ground = meshes[4];
+            console.log(meshes);
+            meshes[4].visibility = 0;
+            basketball = scene.getMeshByName("ball");
+            // console.log(scene.getMeshByName("ball"));
+            hoop = meshes[26];
+            board = meshes[27];
+            net = meshes[15];
+            // table.visibility = 0;
+            ground = meshes[25];
+            barrier = meshes[28];
+            board.visibility = 0;
+            barrier.visibility = 0;
 
-            meshes[2].scaling = new BABYLON.Vector3(1.2, 1.2, 1.2);
+            // // meshes[2].scaling = new BABYLON.Vector3(1.2, 1.2, 1.2);
 
             basketball.position.z = 0;
             basketball.position.y = 100;
@@ -190,6 +221,15 @@
         hitboxGoalCheckEnter.visibility = 0;
         hitboxGoalCheckExit.visibility = 0;
 
+        // var ground1 = BABYLON.MeshBuilder.CreateGround(
+        //   "ground",
+        //   {
+        //     width: 26,
+        //     height: 26,
+        //   },
+        //   scene
+        // );
+
         var groundBox = BABYLON.MeshBuilder.CreateBox(
           "groundBox",
           {
@@ -205,13 +245,25 @@
         groundBox.visibility = 0;
 
         let ballCounter = 1;
-        let currentBall = 1;
+        let currentBallArray = [];
+
+        // scene.enablePhysics(null, new BABYLON.AmmoJSPlugin());
 
         var HK = new BABYLON.HavokPlugin();
         // enable physics in the scene with a gravity
         scene.enablePhysics(new BABYLON.Vector3(0, -9.8, 0), HK);
 
         let sphereAggregate;
+
+        var stand = BABYLON.MeshBuilder.CreateBox(
+          "stand",
+          {
+            size: 1,
+          },
+          scene
+        );
+        stand.position = new BABYLON.Vector3(2.4, -2, 0);
+        stand.visibility = 0;
 
         function getBall(i) {
           let ball = basketball.clone("ball-" + i);
@@ -244,9 +296,11 @@
             scene
           );
 
-          board.material = mat;
+          // board.material = mat;
 
           sphereB.visibility = 0;
+
+          console.log(currentBallArray);
 
           ballCounter++;
 
@@ -254,8 +308,51 @@
         }
 
         setTimeout(() => {
+          // var sg = new BABYLON.ShadowGenerator(1024, light);
+
+          // sg.useBlurExponentialShadowMap = true;
+          // //sg.usePercentageCloserFiltering = true;
+          // // sg.blurBoxOffset = 4;
+          // //sg.usePoissonSampling = true;
+
+          // sg.addShadowCaster(basketball, true);
+          // sg.addShadowCaster(board, true);
+          // sg.addShadowCaster(hoop, true);
+          // // sg.addShadowCaster(ground);
+          // // let sphere = BABYLON.MeshBuilder.CreateSphere(
+          // //   "sphere",
+          // //   {
+          // //     diameter: 1,
+          // //   },
+          // //   scene
+          // // );
+          // // sg.addShadowCaster(sphere);
+
+          // sg.enableSoftTransparentShadow = false;
+          // sg.transparencyShadow = true;
+
+          // basketball.receiveShadows = true;
+          // hoop.receiveShadows = true;
+          // board.receiveShadows = true;
+          // ground.receiveShadows = true;
           // Create a sphere shape and the associated body. Size will be determined automatically.
           getBall(ballCounter);
+
+          // let physicsImpostorNet = new BABYLON.PhysicsImpostor(
+          //   net,
+          //   BABYLON.PhysicsImpostor.ClothImpostor,
+          //   {
+          //     mass: 1,
+          //     friction: 0.1,
+          //     restitution: 0,
+          //     fixedPoints: 3,
+          //     margin: 0.45,
+          //   },
+          //   scene
+          // );
+          // physicsImpostorNet = physicsImpostor.velocityIterations = 10;
+          // net.physicsImpostor.positionIterations = 10;
+          // net.physicsImpostor.stiffness = 1;
 
           // var ground1 = BABYLON.MeshBuilder.CreateGround(
           //   "ground",
@@ -306,6 +403,14 @@
           box1.position.y = 3;
           box1.position.x = -3;
           box1.visibility = 0;
+          var standAggregate1 = new BABYLON.PhysicsAggregate(
+            stand,
+            BABYLON.PhysicsShapeType.BOX,
+            {
+              mass: 0,
+            },
+            scene
+          );
 
           var baruierAggregate1 = new BABYLON.PhysicsAggregate(
             box1,
@@ -363,6 +468,14 @@
             },
             scene
           );
+          var barrierAggregate = new BABYLON.PhysicsAggregate(
+            barrier,
+            BABYLON.PhysicsShapeType.MESH,
+            {
+              mass: 0,
+            },
+            scene
+          );
           var boardAggregate = new BABYLON.PhysicsAggregate(
             board,
             BABYLON.PhysicsShapeType.MESH,
@@ -400,29 +513,41 @@
           scene.onPointerUp = function () {
             up = scene.pointerX;
             top = scene.pointerY;
+
             // if (onGround) {
             console.log(top - bottom);
-            sphereAggregate.body.applyImpulse(
-              new BABYLON.Vector3(
-                -2.6 + (top - bottom) / 1000,
-                5.18 - (top - bottom) / 1000,
-                (up - down) / 100
-              ),
-              scene.getMeshByName("ball-" + (ballCounter - 1)).absolutePosition
-            );
-            setTimeout(() => {
-              scene.getMeshByName("ball-" + (ballCounter - 1)).dispose();
-            }, 2000);
-            setTimeout(() => {
-              getBall(ballCounter);
-            }, 2400);
+            if (!trown) {
+              currentBallArray.push({
+                name: ballCounter - 1,
+                timer: 250,
+              });
+              sphereAggregate.body.applyImpulse(
+                new BABYLON.Vector3(
+                  -2.6 + (top - bottom) / 1000,
+                  5.18 - (top - bottom) / 1000,
+                  (up - down) / 100
+                ),
+                scene.getMeshByName("ball-" + (ballCounter - 1))
+                  .absolutePosition
+              );
+              trownOne = ballCounter - 1;
+              setTimeout(() => {
+                getBall(ballCounter);
+                trown = false;
+              }, 1000);
+              trown = true;
+            }
+
+            // setTimeout(() => {
+            //   scene.getMeshByName("ball-" + (ballCounter - 1)).dispose();
+            // }, 2000);
 
             // }
 
             // new BABYLON.Vector3(-2.6, 5.98, (up - down) / 100),
             // console.log(scene.pointerY);
           };
-        }, 1000);
+        }, 10000);
 
         let t = 0;
         let last = 0;
@@ -438,32 +563,47 @@
             // }
             // console.log(ballCounter - 1);
             // console.log(scene.getMeshByName("sphere-" + (ballCounter - 1)));
+            if (currentBallArray.length > 0) {
+              for (let i = 0; i < currentBallArray.length; i++) {
+                currentBallArray[i].timer -= 1;
+                if (currentBallArray[i].timer == 0) {
+                  console.log(
+                    scene.getMeshByName("ball-" + currentBallArray[i].name)
+                  );
+                  scene
+                    .getMeshByName("ball-" + currentBallArray[i].name)
+                    .dispose();
+                  currentBallArray.splice(i, 1);
+                  i += 1;
+                }
+              }
+            }
 
             if (
-              scene.getMeshByName("sphere-" + (ballCounter - 1)) &&
+              scene.getMeshByName("sphere-" + trownOne) &&
               scene
-                .getMeshByName("sphere-" + (ballCounter - 1))
+                .getMeshByName("sphere-" + trownOne)
                 .intersectsMesh(hitboxGoalCheckEnter, false)
             ) {
-              // console.log("uslo");
+              console.log("uslo");
               if (last != 0) {
                 last = curent;
               }
               curent = 1;
             }
             if (
-              scene.getMeshByName("sphere-" + (ballCounter - 1)) &&
+              scene.getMeshByName("sphere-" + trownOne) &&
               scene
-                .getMeshByName("sphere-" + (ballCounter - 1))
+                .getMeshByName("sphere-" + trownOne)
                 .intersectsMesh(hitboxGoalCheckExit, false)
             ) {
-              // console.log("izaslo");
+              console.log("izaslo");
               last = curent;
               curent = 2;
               if (last == 1 && curent == 2) {
                 score++;
                 document.getElementById("score").innerHTML = score;
-                // console.log(score);
+                console.log(score);
               }
             }
           }
@@ -473,6 +613,7 @@
       };
       window.initFunction = async function () {
         globalThis.HK = await HavokPhysics();
+        // await Ammo();
         var asyncEngineCreation = async function () {
           try {
             return createDefaultEngine();
