@@ -164,8 +164,11 @@
             basketball = scene.getMeshByName("ball");
             // console.log(scene.getMeshByName("ball"));
             hoop = meshes[26];
+            hoop.scaling = new BABYLON.Vector3(0.02, 0.02, 0.02);
             board = meshes[27];
             net = meshes[15];
+            meshes[17].visibility = 0;
+            meshes[16].visibility = 0;
             // table.visibility = 0;
             ground = meshes[25];
             barrier = meshes[28];
@@ -523,8 +526,8 @@
               });
               sphereAggregate.body.applyImpulse(
                 new BABYLON.Vector3(
-                  -2.6 + (top - bottom) / 1000,
-                  5.18 - (top - bottom) / 1000,
+                  -2.25 + (top - bottom) / 1000,
+                  5.68 - (top - bottom) / 1000,
                   (up - down) / 100
                 ),
                 scene.getMeshByName("ball-" + (ballCounter - 1))
@@ -547,7 +550,7 @@
             // new BABYLON.Vector3(-2.6, 5.98, (up - down) / 100),
             // console.log(scene.pointerY);
           };
-        }, 10000);
+        }, 5000);
 
         let t = 0;
         let last = 0;
