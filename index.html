@@ -44,6 +44,11 @@
         height: 100%;
       }
 
+      @font-face {
+        font-family: digital-7;
+        src: url(digital-7.ttf);
+      }
+
       #numberBox {
         position: absolute;
         top: 5vh;
@@ -70,6 +75,7 @@
         align-items: center;
         justify-content: space-between;
         color: aliceblue;
+        font-family: digital-7;
       }
     </style>
   </head>
@@ -297,13 +303,13 @@
 
         //Add text to dynamic texture
 
-        var font = "bold 125px monospace";
+        var font = "bold 125px digital-7";
         textureGround.drawText(
           "00:30",
           null,
           200,
           font,
-          "green",
+          "red",
           "black",
           true,
           false
@@ -315,9 +321,9 @@
 
         // update changes to dynamic texture
 
-        var font1 = "bold 200px monospace";
+        var font1 = "bold 200px digital-7";
 
-        textureGround.drawText("0", null, 400, font1, "green", "", true, true);
+        textureGround.drawText("0", null, 400, font1, "red", "", true, true);
 
         function drawScore() {
           let text1 = "00:0" + timer;
@@ -328,13 +334,13 @@
           }
 
           let text2 = score;
-          var font = "bold 125px monospace";
+          var font = "bold 125px digital-7";
           textureGround.drawText(
             text1,
             null,
             200,
             font,
-            "green",
+            "red",
             "black",
             true,
             false
@@ -346,14 +352,14 @@
 
           // update changes to dynamic texture
 
-          var font1 = "bold 200px monospace";
+          var font1 = "bold 200px digital-7";
 
           textureGround.drawText(
             text2,
             null,
             400,
             font1,
-            "green",
+            "red",
             "",
             true,
             true
