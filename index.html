@@ -175,6 +175,16 @@
         // );
         // box55.position = new BABYLON.Vector3(5, 5, 0);
 
+        const hdrTexture = BABYLON.CubeTexture.CreateFromPrefilteredData(
+          "003.env",
+          scene
+        );
+        hdrTexture.rotationY = -0.2;
+
+        scene.environmentIntensity = 0.75;
+
+        scene.environmentTexture = hdrTexture;
+
         let basketball;
         let hoop;
         let board;
@@ -302,28 +312,6 @@
         // context.restore();
 
         //Add text to dynamic texture
-
-        var font = "bold 125px digital-7";
-        textureGround.drawText(
-          "00:30",
-          null,
-          200,
-          font,
-          "red",
-          "black",
-          true,
-          false
-        );
-
-        // context.save();
-        // context.restore();
-        textureGround.update();
-
-        // update changes to dynamic texture
-
-        var font1 = "bold 200px digital-7";
-
-        textureGround.drawText("0", null, 400, font1, "red", "", true, true);
 
         function drawScore() {
           let text1 = "00:0" + timer;
@@ -479,19 +467,19 @@
             BABYLON.PhysicsShapeType.SPHERE,
             {
               mass: 1,
-              restitution: 0.83,
+              restitution: 0.84,
             },
             scene
           );
 
-          shadowGenerator.getShadowMap().renderList.push(sphereB);
-          shadowGenerator.addShadowCaster(sphereB);
-          sphereB.receiveShadows = true;
+          shadowGenerator.getShadowMap().renderList.push(ball);
+          shadowGenerator.addShadowCaster(ball);
+          ball.receiveShadows = true;
           console.log(shadowGenerator.getShadowMap().renderList);
 
           // board.material = mat;
 
-          //   sphereB.visibility = 0;
+          sphereB.visibility = 0;
 
           // console.log(currentBallArray);
 
@@ -523,8 +511,44 @@
           );
           ballHolder2.position = new BABYLON.Vector3(3.34, 1, 0);
 
+          let ballHolder3 = BABYLON.MeshBuilder.CreateBox(
+            "ballHolder3",
+            {
+              size: 1,
+              width: 1,
+              height: 1,
+            },
+            scene
+          );
+          ballHolder3.position = new BABYLON.Vector3(2.5, -1, 0.95);
+
+          let ballHolder4 = BABYLON.MeshBuilder.CreateBox(
+            "ballHolder4",
+            {
+              size: 1,
+              width: 1,
+              height: 1,
+            },
+            scene
+          );
+          ballHolder4.position = new BABYLON.Vector3(2.5, -1, -0.95);
+
+          let ballHolder5 = BABYLON.MeshBuilder.CreateBox(
+            "ballHolder5",
+            {
+              size: 1,
+              width: 1,
+              height: 1,
+            },
+            scene
+          );
+          ballHolder5.position = new BABYLON.Vector3(3.5, -1, 0);
+
           ballHolder1.visibility = 0;
           ballHolder2.visibility = 0;
+          ballHolder3.visibility = 0;
+          ballHolder4.visibility = 0;
+          ballHolder5.visibility = 0;
 
           var ballHolder1Aggregate = new BABYLON.PhysicsAggregate(
             ballHolder1,
@@ -537,6 +561,30 @@
 
           var ballHolder2Aggregate = new BABYLON.PhysicsAggregate(
             ballHolder2,
+            BABYLON.PhysicsShapeType.BOX,
+            {
+              mass: 0,
+            },
+            scene
+          );
+          var ballHolder3Aggregate = new BABYLON.PhysicsAggregate(
+            ballHolder3,
+            BABYLON.PhysicsShapeType.BOX,
+            {
+              mass: 0,
+            },
+            scene
+          );
+          var ballHolder4Aggregate = new BABYLON.PhysicsAggregate(
+            ballHolder4,
+            BABYLON.PhysicsShapeType.BOX,
+            {
+              mass: 0,
+            },
+            scene
+          );
+          var ballHolder5Aggregate = new BABYLON.PhysicsAggregate(
+            ballHolder5,
             BABYLON.PhysicsShapeType.BOX,
             {
               mass: 0,
@@ -567,6 +615,28 @@
 
         setTimeout(() => {
           getBall(ballCounter);
+
+          var font = "bold 125px digital-7";
+          textureGround.drawText(
+            "00:30",
+            null,
+            200,
+            font,
+            "red",
+            "black",
+            true,
+            false
+          );
+
+          // context.save();
+          // context.restore();
+          textureGround.update();
+
+          // update changes to dynamic texture
+
+          var font1 = "bold 200px digital-7";
+
+          textureGround.drawText("0", null, 400, font1, "red", "", true, true);
 
           //   ground1.receiveShadows = true;
 
@@ -706,6 +776,16 @@
               if (!trown) {
                 scene.getMeshByName("ballHolder1").dispose();
                 scene.getMeshByName("ballHolder2").dispose();
+                scene.getMeshByName("ballHolder3").dispose();
+                scene.getMeshByName("ballHolder4").dispose();
+                scene.getMeshByName("ballHolder5").dispose();
+                while (scene.getMeshByName("ballHolder1")) {
+                  scene.getMeshByName("ballHolder1").dispose();
+                  scene.getMeshByName("ballHolder2").dispose();
+                  scene.getMeshByName("ballHolder3").dispose();
+                  scene.getMeshByName("ballHolder4").dispose();
+                  scene.getMeshByName("ballHolder5").dispose();
+                }
               }
             }
 
@@ -749,7 +829,7 @@
                   getBall(ballCounter);
 
                   trown = false;
-                }, 1000);
+                }, 1500);
                 trown = true;
               }
             }
@@ -799,7 +879,6 @@
               timerCounter++;
               if (timerCounter % 60 == 0) {
                 timer -= 1;
-                console.log(timer);
 
                 drawScore();
                 if (timer == 0) {
@@ -820,9 +899,6 @@
               for (let i = 0; i < currentBallArray.length; i++) {
                 currentBallArray[i].timer -= 1;
                 if (currentBallArray[i].timer == 0) {
-                  console.log(
-                    scene.getMeshByName("ball-" + currentBallArray[i].name)
-                  );
                   scene
                     .getMeshByName("ball-" + currentBallArray[i].name)
                     .dispose();
@@ -838,7 +914,6 @@
                 .getMeshByName("sphere-" + trownOne)
                 .intersectsMesh(hitboxGoalCheckEnter, false)
             ) {
-              console.log("uslo");
               if (last != 0) {
                 last = curent;
               }
@@ -850,7 +925,6 @@
                 .getMeshByName("sphere-" + trownOne)
                 .intersectsMesh(hitboxGoalCheckExit, false)
             ) {
-              console.log("izaslo");
               last = curent;
               curent = 2;
               if (last == 1 && curent == 2) {
@@ -870,7 +944,6 @@
 
                 timer += 1;
 
-                console.log(score);
                 drawScore();
               }
             }
