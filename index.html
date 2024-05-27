@@ -209,7 +209,7 @@
           scene,
           (meshes, particleSystem, skeleton, animationGroups) => {
             meshes[0].scaling = new BABYLON.Vector3(-1, 1, 1);
-            console.log(meshes);
+           
             // meshes[4].visibility = 0;
             basketball = meshes[1];
             // console.log(scene.getMeshByName("ball"));
@@ -456,7 +456,7 @@
           var sphereB = BABYLON.MeshBuilder.CreateSphere(
             "sphere1-" + i,
             {
-              diameter: 0.47,
+              diameter: 0.48,
             },
             scene
           );
@@ -475,7 +475,7 @@
           shadowGenerator.getShadowMap().renderList.push(ball);
           shadowGenerator.addShadowCaster(ball);
           ball.receiveShadows = true;
-          console.log(shadowGenerator.getShadowMap().renderList);
+          
 
           // board.material = mat;
 
@@ -813,7 +813,7 @@
 
                 currentBallArray.push({
                   name: ballCounter - 1,
-                  timer: 250,
+                  timer: 650,
                 });
                 sphereAggregate.body.applyImpulse(
                   new BABYLON.Vector3(
@@ -871,6 +871,9 @@
             drawScore();
             paused = false;
           });
+          let bTup=false
+          let tup=false
+          let hTup=false
 
         scene.onBeforeRenderObservable.add(() => {
           t++;
@@ -906,6 +909,90 @@
                   i += 1;
                 }
               }
+            }
+
+            if (
+              scene.getMeshByName("sphere1-" + trownOne) 
+              &&
+              scene
+                .getMeshByName("sphere1-" + trownOne)
+                .intersectsMesh(ground, false)
+            ) {
+              console.log('tup')
+              if(!tup){
+                tup=true
+                const music1 = new BABYLON.Sound(
+                  "Music",
+                  "mixkit-ball-bouncing-in-the-ground-2077.wav",
+                  scene,
+                  null,
+                  {
+                    loop: false,
+                    autoplay: true,
+                  }
+                );
+
+              }
+          
+            }else{
+              tup=false
+            }
+            if (
+              scene.getMeshByName("sphere1-" + trownOne) 
+              &&
+              scene
+                .getMeshByName("sphere1-" + trownOne)
+                .intersectsMesh(board, false)
+            ) {
+              console.log('tup')
+              if(!bTup){
+                bTup=true
+                const music2 = new BABYLON.Sound(
+                  "Music",
+                  "mixkit-basketball-ball-hard-hit-2093.wav",
+                  scene,
+                  null,
+                  {
+                    loop: false,
+                    autoplay: true,
+                  }
+                );
+
+
+              }
+             
+            }else{
+              bTup=false
+
+            }
+
+            if (
+              scene.getMeshByName("sphere1-" + trownOne) 
+              &&
+              scene
+                .getMeshByName("sphere1-" + trownOne)
+                .intersectsMesh(hoop, false)
+            ) {
+              console.log('tup')
+              if(!hTup){
+                hTup=true
+                const music2 = new BABYLON.Sound(
+                  "Music",
+                  "mixkit-sports-ball-hit-2082.wav",
+                  scene,
+                  null,
+                  {
+                    loop: false,
+                    autoplay: true,
+                  }
+                );
+
+
+              }
+             
+            }else{
+              hTup=false
+
             }
 
             if (
