@@ -153,7 +153,22 @@ var createScene = function () {
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlubGhldmplbHpmYnNjZ3V1anNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTc0MDMwMTcsImV4cCI6MjAzMjk3OTAxN30.sybHe-0rVlrPbkK-d6-Go4KjAF32M57iw1caNQN-1NY"
   );
 
+  const _supabaseA = createClient(
+    "https://zhtbsboryikeigoaeztq.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpodGJzYm9yeWlrZWlnb2FlenRxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTgwMDA3MDQsImV4cCI6MjAzMzU3NjcwNH0.0cDIpFEnQLC8KzCsxMd25sXF4ofs6lU7vz8LlpO44yw"
+  );
+
   console.log("Supabase Instance: ", _supabase);
+
+  // async function makeAccount() {
+  //   let { data, error } = await _supabase.auth.signUp({
+  //     email: "razal3132lazar@gmail.com",
+  //     password: "kozma13",
+  //     context: "neka sranja",
+  //   });
+  //   console.log(data);
+  // }
+  // makeAccount();
 
   async function getData() {
     let { data: ScoreBoard, error } = await _supabase
@@ -171,6 +186,15 @@ var createScene = function () {
       if (array[i].country != "*") {
         link =
           '<img src = "1x1/' + array[i].country + '.svg"alt="My Happy SVG"/>';
+      }
+      // document.getElementById("countryProfile").innerHTML = "";
+
+      if (name == array[i].name) {
+        document.getElementById("nameProfile").innerHTML = name;
+
+        document.getElementById("countryProfile").innerHTML = link;
+        document.getElementById("scoreProfile").innerHTML =
+          "Best Score : " + array[i].score;
       }
 
       document.getElementById(
@@ -333,6 +357,8 @@ var createScene = function () {
             foundP = true;
             document.getElementById("nameBoxO").style.display = "none";
             name = name1;
+            console.log(name);
+            getData();
           }
         }
       }
@@ -345,13 +371,36 @@ var createScene = function () {
     }
   });
 
-  document.getElementById("name").addEventListener("click", function () {
+  document.getElementById("logOutBtn").addEventListener("click", function () {
+    document.getElementById("profileBoxO").style.display = "none";
+
     document.getElementById("nameBoxO").style.display = "flex";
+    document.getElementById("usernameC").value = "";
+    document.getElementById("passwordC").value = "";
+  });
+
+  document.getElementById("name").addEventListener("click", function () {
+    document.getElementById("profileBoxO").style.display = "flex";
+  });
+
+  document.getElementById("goToYouBtn").addEventListener("click", function () {
+    let names = document.getElementsByClassName("rowName");
+    for (let i = 0; i < names.length; i++) {
+      if (names[i].textContent == name) {
+        names[i].scrollIntoView();
+      }
+    }
   });
 
   document.getElementById("scoreBoard").addEventListener("click", function () {
     document.getElementById("scoreBoxO").style.display = "flex";
   });
+  document
+    .getElementById("closeProfile")
+    .addEventListener("click", function () {
+      document.getElementById("profileBoxO").style.display = "none";
+    });
+
   document.getElementById("closeScore").addEventListener("click", function () {
     document.getElementById("scoreBoxO").style.display = "none";
   });

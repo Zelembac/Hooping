@@ -208,6 +208,27 @@
         background-color: rgb(248, 137, 58);
         color: aliceblue;
         font-family: digital-7;
+        box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
+          rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+          rgb(245, 140, 65) 0 -3px 0 inset;
+      }
+
+      .btnAcc:focus {
+        box-shadow: rgb(245, 140, 65) 0 0 0 1.5px inset,
+          rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+          rgb(245, 140, 65) 0 -3px 0 inset;
+      }
+
+      .btnAcc:hover {
+        box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
+          rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+          rgb(245, 140, 65) 0 -3px 0 inset;
+        transform: translateY(-2px);
+      }
+
+      .btnAcc:active {
+        box-shadow: rgb(245, 140, 65) 0 3px 7px inset;
+        transform: translateY(2px);
       }
 
       #logInBtn {
@@ -290,7 +311,7 @@
       }
 
       #topPartScore h2 {
-        width: 85%;
+        width: 60%;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -314,6 +335,26 @@
         justify-content: center;
         border-radius: 1em;
         font-family: digital-7;
+        margin: 2%;
+        box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
+          rgba(45, 35, 66, 0.3) 0 7px 13px -3px, rgb(208, 73, 6) 0 -3px 0 inset;
+      }
+
+      #closeScore:focus {
+        box-shadow: rgb(208, 73, 6) 0 0 0 1.5px inset,
+          rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+          rgb(208, 73, 6) 0 -3px 0 inset;
+      }
+
+      #closeScore:hover {
+        box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
+          rgba(45, 35, 66, 0.3) 0 7px 13px -3px, rgb(208, 73, 6) 0 -3px 0 inset;
+        transform: translateY(-2px);
+      }
+
+      #closeScore:active {
+        box-shadow: rgb(208, 73, 6) 0 3px 7px inset;
+        transform: translateY(2px);
       }
 
       #nameC {
@@ -338,6 +379,184 @@
         color: white;
         margin: 2em;
       }
+
+      #profileBoxO {
+        position: absolute;
+        top: 0vh;
+        left: 0vw;
+        width: 100vw;
+        height: 100vh;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        background-color: rgba(87, 85, 85, 0.505);
+      }
+
+      #profileBoxI {
+        width: 50vw;
+        height: 40vh;
+        font-size: 2.2em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: aliceblue;
+        font-family: digital-7;
+        background-color: chocolate;
+        border-radius: 1em;
+      }
+
+      #topPartProfile {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 20%;
+        width: 100%;
+      }
+
+      #bottomPartProfile {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 80%;
+        width: 100%;
+      }
+
+      #topPartProfile h2 {
+        width: 85%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #closeProfile {
+        background-color: red;
+        width: 15%;
+        height: 55%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 1em;
+        font-family: digital-7;
+        margin: 2%;
+        box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
+          rgba(45, 35, 66, 0.3) 0 7px 13px -3px, rgb(208, 73, 6) 0 -3px 0 inset;
+      }
+
+      #closeProfile:focus {
+        box-shadow: rgb(208, 73, 6) 0 0 0 1.5px inset,
+          rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+          rgb(208, 73, 6) 0 -3px 0 inset;
+      }
+
+      #closeProfile:hover {
+        box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
+          rgba(45, 35, 66, 0.3) 0 7px 13px -3px, rgb(208, 73, 6) 0 -3px 0 inset;
+        transform: translateY(-2px);
+      }
+
+      #closeProfile:active {
+        box-shadow: rgb(208, 73, 6) 0 3px 7px inset;
+        transform: translateY(2px);
+      }
+
+      #profileNC {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        width: 100%;
+        height: 50%;
+        font-size: 1.5em;
+      }
+
+      #scoreProfile {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 30%;
+        font-size: 1.2em;
+      }
+
+      #countryProfile {
+        width: 30%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #logOutBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40%;
+        height: 10%;
+        border-radius: 1em;
+        font-size: 0.8em;
+        border: none;
+        background-color: rgb(248, 137, 58);
+        color: aliceblue;
+        font-family: digital-7;
+        box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
+          rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+          rgb(245, 140, 65) 0 -3px 0 inset;
+      }
+
+      #logOutBtn:focus {
+        box-shadow: rgb(245, 140, 65) 0 0 0 1.5px inset,
+          rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+          rgb(245, 140, 65) 0 -3px 0 inset;
+      }
+
+      #logOutBtn:hover {
+        box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
+          rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+          rgb(245, 140, 65) 0 -3px 0 inset;
+        transform: translateY(-2px);
+      }
+
+      #logOutBtn:active {
+        box-shadow: rgb(245, 140, 65) 0 3px 7px inset;
+        transform: translateY(2px);
+      }
+
+      #goToYouBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20%;
+        height: 80%;
+        border-radius: 1em;
+        font-size: 0.8em;
+        border: none;
+        background-color: rgb(248, 137, 58);
+        color: aliceblue;
+        font-family: digital-7;
+        box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
+          rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+          rgb(245, 140, 65) 0 -3px 0 inset;
+      }
+
+      #goToYouBtn:focus {
+        box-shadow: rgb(245, 140, 65) 0 0 0 1.5px inset,
+          rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+          rgb(245, 140, 65) 0 -3px 0 inset;
+      }
+
+      #goToYouBtn:hover {
+        box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
+          rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+          rgb(245, 140, 65) 0 -3px 0 inset;
+        transform: translateY(-2px);
+      }
+
+      #goToYouBtn:active {
+        box-shadow: rgb(245, 140, 65) 0 3px 7px inset;
+        transform: translateY(2px);
+      }
     </style>
   </head>
 
@@ -353,8 +572,25 @@
     </div>
 
     <div id="scoreBox">
-      <div id="name">name</div>
+      <div id="name">Profile</div>
       <div id="scoreBoard">score board</div>
+    </div>
+
+    <div id="profileBoxO">
+      <div id="profileBoxI">
+        <div id="topPartProfile">
+          <h2>Profile</h2>
+          <div id="closeProfile">X</div>
+        </div>
+        <div id="bottomPartProfile">
+          <div id="profileNC">
+            <div id="nameProfile"></div>
+            <div id="countryProfile"></div>
+          </div>
+          <div id="scoreProfile"></div>
+          <button id="logOutBtn">Log out</button>
+        </div>
+      </div>
     </div>
 
     <div id="nameBoxO">
@@ -363,7 +599,6 @@
           <h2>Choose your name</h2>
         </div>
         <div id="bottomPartName">
-          <!-- <input type="text" id="nameC" /> -->
           <div class="inputBox">
             <label for="usernameC">Username</label>
             <input class="input" type="text" id="usernameC" />
@@ -640,7 +875,6 @@
           <button class="btnAcc" id="logInBtn">Log in</button>
           <button class="btnAcc forRegister" id="registerBtn">Register</button>
           <button class="btnAcc" id="singUpBtn">Sing Up</button>
-          <!-- <button id="nameBtn">Change</button> -->
         </div>
       </div>
     </div>
@@ -649,6 +883,7 @@
       <div id="scoreBoxI">
         <div id="topPartScore">
           <h2>Score Board</h2>
+          <button id="goToYouBtn">Go to you</button>
           <div id="closeScore">X</div>
         </div>
         <div id="bottomPartScore">
