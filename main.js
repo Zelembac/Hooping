@@ -217,7 +217,7 @@ var createScene = function() {
 
             if (array[i].country != "*") {
                 link =
-                    '<img src = "1x1/' + array[i].country + '.svg"alt="My Happy SVG"/>';
+                    '<img src = "1x1/' + array[i].country.toLowerCase() + '.svg"alt="My Happy SVG"/>';
             }
             // document.getElementById("countryProfile").innerHTML = "";
 
